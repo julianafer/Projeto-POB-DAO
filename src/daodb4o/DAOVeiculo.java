@@ -25,6 +25,7 @@ public class DAOVeiculo extends DAO<Veiculo> {
 	//--------------------------------------------
 	
 	// quais os veiculos contendo registro na data X
+	
 	public List<Veiculo> veiculosData(String data){
 		Query q;
 		q = manager.query();

@@ -39,20 +39,23 @@ public class Fachada {
 		return tipo;
 	}
 	
-	public static Veiculo criarVeiculo(String placa, TipoVeiculo tipoVeiculo) throws Exception{
+	public static Veiculo criarVeiculo(String placa, String tipoVeiculo) throws Exception{
 		DAO.begin();
 		Veiculo veiculo = daoveiculo.read(placa);
 		if (veiculo!=null)
 			throw new Exception("Veiculo ja cadastrado: " + placa);
-		veiculo = new Veiculo(placa, tipoVeiculo);
+		
+		TipoVeiculo tipo = daotipoveiculo.read(tipoVeiculo);
+		veiculo = new Veiculo(placa, tipo);
 
 		daoveiculo.create(veiculo);
 		DAO.commit();
 		return veiculo;
 	}
 	
-	public static Registro criarRegistro(String datahora, Veiculo veiculo, String operacao) throws Exception {
+	public static Registro criarRegistro(String datahora, String placa, String operacao) throws Exception {
 		DAO.begin();
+		Veiculo veiculo = daoveiculo.read(placa);
 		List<Registro> registros = veiculo.getRegistros();
 		
 		if (operacao.equals("entrada")) {
@@ -181,5 +184,28 @@ public class Fachada {
 		DAO.commit();
 		return resultados;
 	}
+	
+	// ---- Consultas
+	
+	public static List<Veiculo> VeiculosEmDatas(String data){
+		DAO.begin();
+		List<Veiculo> resultado= daoveiculo.veiculosData(data);
+		DAO.commit();
+		return resultado;
+	}
+	
+	public static List<Veiculo> VeiculosNRegistros(int n){
+		DAO.begin();
+		List<Veiculo> resultado= daoveiculo.veiculosNRegistros(n);
+		DAO.commit();
+		return resultado;
+	}
+	
+	public static List<Registro> registrosData(String data) {
+		DAO.begin();
+		List<Registro> resultado= daoregistro.registrosData(data);
+		DAO.commit();
+		return resultado;
+	} 
 	
 }
