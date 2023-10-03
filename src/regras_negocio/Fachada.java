@@ -192,14 +192,14 @@ public class Fachada {
 	
 	// ---- Consultas
 	
-	public static List<Veiculo> VeiculosEmDatas(String data){
+	public static List<Veiculo> veiculosEmDatas(String data){
 		DAO.begin();
 		List<Veiculo> resultado= daoveiculo.veiculosData(data);
 		DAO.commit();
 		return resultado;
 	}
 	
-	public static List<Veiculo> VeiculosNRegistros(int n){
+	public static List<Veiculo> veiculosNRegistros(int n){
 		DAO.begin();
 		List<Veiculo> resultado= daoveiculo.veiculosNRegistros(n);
 		DAO.commit();
