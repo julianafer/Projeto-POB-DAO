@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,9 +25,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.db4o.ObjectContainer;
-
-import modelo.Aluguel;
 import modelo.Registro;
 import regras_negocio.Fachada;
 import javax.swing.JRadioButton;
@@ -40,12 +36,11 @@ public class TelaRegistros {
 	private JTextField textField;
 	private JTextField textField_2;
 	private JButton button;
-	private JButton button_1;
+	private JButton btnCriarNovoRegistro;
 	private JButton button_2;
 	private JLabel label;
 	private JLabel label_1;
 	private JLabel label_3;
-	private JLabel label_5;
 	private JLabel label_6;
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
@@ -134,17 +129,84 @@ public class TelaRegistros {
 		label_1 = new JLabel("Data:");
 		label_1.setHorizontalAlignment(SwingConstants.LEFT);
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_1.setBounds(41, 246, 29, 14);
+		label_1.setBounds(41, 252, 29, 14);
 		frame.getContentPane().add(label_1);
 
 		textField = new JTextField();
 		textField.setFont(new Font("Dialog", Font.PLAIN, 12));
 		textField.setColumns(10);
-		textField.setBounds(77, 243, 195, 20);
+		textField.setBounds(77, 249, 195, 20);
 		frame.getContentPane().add(textField);
 
-		button_1 = new JButton("Criar novo aluguel");
-		button_1.addActionListener(new ActionListener() {
+		button = new JButton("Listar");
+		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listagem();
+			}
+		});
+		button.setBounds(431, 321, 171, 23);
+		frame.getContentPane().add(button);
+
+		button_2 = new JButton("Apagar selecionado");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					if (table.getSelectedRow() >= 0) {	
+						int id = (int) table.getValueAt( table.getSelectedRow(), 0);
+
+						Fachada.excluirRegistro(id);
+						label.setText("registro apagado" );
+						listagem();
+
+					}
+					else
+						label.setText("nao selecionado");
+				}
+				catch(Exception ex) {
+					label.setText(ex.getMessage());
+				}
+			}
+		});
+		button_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		button_2.setBounds(431, 287, 171, 23);
+		frame.getContentPane().add(button_2);
+
+
+		textField_2 = new JTextField();
+		textField_2.setBounds(77, 277, 195, 19);
+		frame.getContentPane().add(textField_2);
+		textField_2.setColumns(10);
+
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(47, 308, 1, 16);
+		frame.getContentPane().add(textPane);
+
+		label_3 = new JLabel("Placa:");
+		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		label_3.setBounds(41, 281, 89, 16);
+		frame.getContentPane().add(label_3);
+		
+		radioButton = new JRadioButton("Entrada");
+		radioButton.setBackground(Color.WHITE);
+		radioButton.setBounds(446, 260, 80, 23);
+		frame.getContentPane().add(radioButton);
+		
+		radioButton_1 = new JRadioButton("Saída");
+		radioButton_1.setBackground(Color.WHITE);
+		radioButton_1.setBounds(528, 260, 109, 23);
+		frame.getContentPane().add(radioButton_1);
+		
+		ButtonGroup group = new ButtonGroup();
+        group.add(radioButton);
+        group.add(radioButton_1);
+		
+		label_2 = new JLabel("Operação:");
+		label_2.setBounds(493, 239, 64, 14);
+		frame.getContentPane().add(label_2);
+
+		btnCriarNovoRegistro = new JButton("Criar novo registro");
+		btnCriarNovoRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(textField.getText().isEmpty() || textField_2.getText().isEmpty()) {
@@ -164,7 +226,7 @@ public class TelaRegistros {
 					String placa = textField_2.getText();
 
 					Fachada.criarRegistro(data, placa, opcao);
-					label.setText("aluguel criado");
+					label.setText("Registro criado");
 					listagem();
 				}
 				catch(Exception ex) {
@@ -172,79 +234,9 @@ public class TelaRegistros {
 				}
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(141, 301, 153, 23);
-		frame.getContentPane().add(button_1);
-
-		button = new JButton("Listar");
-		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listagem();
-			}
-		});
-		button.setBounds(308, 11, 89, 23);
-		frame.getContentPane().add(button);
-
-		button_2 = new JButton("Apagar selecionado");
-		button_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try{
-					if (table.getSelectedRow() >= 0) {	
-						int id = (int) table.getValueAt( table.getSelectedRow(), 0);
-
-						Fachada.excluirRegistro(id);
-						label.setText("aluguel apagado" );
-						listagem();
-
-					}
-					else
-						label.setText("nao selecionado");
-				}
-				catch(Exception ex) {
-					label.setText(ex.getMessage());
-				}
-			}
-		});
-		button_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_2.setBounds(400, 301, 171, 23);
-		frame.getContentPane().add(button_2);
-
-
-		textField_2 = new JTextField();
-		textField_2.setBounds(77, 271, 130, 19);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
-
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(47, 308, 1, 16);
-		frame.getContentPane().add(textPane);
-
-		label_3 = new JLabel("Placa:");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_3.setBounds(41, 275, 89, 16);
-		frame.getContentPane().add(label_3);
-
-		label_5 = new JLabel("");
-		label_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		label_5.setBounds(331, 267, 52, 16);
-		frame.getContentPane().add(label_5);
-		
-		radioButton = new JRadioButton("Entrada");
-		radioButton.setBounds(487, 264, 80, 23);
-		frame.getContentPane().add(radioButton);
-		
-		radioButton_1 = new JRadioButton("Saída");
-		radioButton_1.setBounds(569, 264, 109, 23);
-		frame.getContentPane().add(radioButton_1);
-		
-		ButtonGroup group = new ButtonGroup();
-        group.add(radioButton);
-        group.add(radioButton_1);
-		
-		label_2 = new JLabel("Operação:");
-		label_2.setBounds(534, 243, 64, 14);
-		frame.getContentPane().add(label_2);
+		btnCriarNovoRegistro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCriarNovoRegistro.setBounds(92, 321, 153, 23);
+		frame.getContentPane().add(btnCriarNovoRegistro);
 	}
 
 	public void listagem() {

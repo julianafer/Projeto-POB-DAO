@@ -1,7 +1,5 @@
 package modelo;
 
-import appconsole.Util;
-
 public class Registro {
 
 	private int id; // gerar id na classe util do exemplo locadora (eu acho)
@@ -11,7 +9,6 @@ public class Registro {
 	
 	public Registro(String datahora, Veiculo veiculo, String operacao) {
 		super();
-		this.setId(Util.gerarIdRegistro());
 		this.datahora = datahora;
 		this.veiculo = veiculo;
 		this.operacao = operacao;

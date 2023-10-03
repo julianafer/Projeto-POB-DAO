@@ -46,6 +46,8 @@ public class Fachada {
 			throw new Exception("Veiculo ja cadastrado: " + placa);
 		
 		TipoVeiculo tipo = daotipoveiculo.read(tipoVeiculo);
+		if (tipo==null)
+			throw new Exception("tipo " + tipoVeiculo + " inexistente");
 		veiculo = new Veiculo(placa, tipo);
 
 		daoveiculo.create(veiculo);
@@ -56,16 +58,19 @@ public class Fachada {
 	public static Registro criarRegistro(String datahora, String placa, String operacao) throws Exception {
 		DAO.begin();
 		Veiculo veiculo = daoveiculo.read(placa);
+		if (veiculo==null)
+			throw new Exception("veiculo " + placa + " inexistente");
+		
 		List<Registro> registros = veiculo.getRegistros();
 		
-		if (operacao.equals("entrada")) {
+		/*if (operacao.equals("entrada")) {
 			if (registros.get(registros.size()-1).getOperacao().equals("entrada")) 
 				throw new Exception("Entrada já registrada");
 		}
 		else {
 			if (registros.get(registros.size()-1).getOperacao().equals("saida")) 
 				throw new Exception("Saida já registrada");
-		}
+		}*/
 
 		Registro registro = new Registro(datahora, veiculo, operacao);
 		daoregistro.create(registro);

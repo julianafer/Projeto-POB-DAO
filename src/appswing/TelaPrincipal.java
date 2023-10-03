@@ -1,9 +1,4 @@
 package appswing;
-/**********************************
- * IFPB - SI
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- **********************************/
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -23,6 +18,8 @@ import javax.swing.SwingConstants;
 import regras_negocio.Fachada;
 import javax.swing.JMenuItem;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaPrincipal {
 
@@ -81,13 +78,28 @@ public class TelaPrincipal {
 		JMenu mnNewMenu = new JMenu("Opções");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Tipo de Veículo");
+		JMenuItem mntmNewMenuItem = new JMenuItem("Tipo de veículo");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaTipos tela = new TelaTipos();
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Veículo");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaVeiculos tela = new TelaVeiculos();
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Registro");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaRegistros tela = new TelaRegistros();
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_2);
 		
 		JMenu mnNewMenu_1 = new JMenu("Sair");
@@ -97,6 +109,15 @@ public class TelaPrincipal {
 				frmEstacionamento.dispose();
 			}
 		});
+		
+		JMenu mnNewMenu_2 = new JMenu("Consultas");
+		mnNewMenu_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				TelaConsulta tela = new TelaConsulta();
+			}
+		});
+		menuBar.add(mnNewMenu_2);
 		menuBar.add(mnNewMenu_1);
 		
 		JLabel lblNewLabel = new JLabel("ESTACIONAMENTO");

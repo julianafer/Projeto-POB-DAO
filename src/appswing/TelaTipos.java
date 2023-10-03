@@ -1,4 +1,3 @@
-
 package appswing;
 
 import java.awt.Color;
@@ -16,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -25,10 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.db4o.ObjectContainer;
-
-import modelo.Aluguel;
-import modelo.Cliente;
 import modelo.TipoVeiculo;
 import regras_negocio.Fachada;
 
@@ -38,7 +32,7 @@ public class TelaTipos {
 	private JScrollPane scrollPane;
 	private JTextField textField_1;
 	private JButton button;
-	private JButton button_1;
+	private JButton btnCriarNovoCtipo;
 	private JButton button_2;
 	private JLabel label;
 	private JLabel label_3;
@@ -125,8 +119,8 @@ public class TelaTipos {
 		label_4.setBounds(21, 190, 431, 14);
 		frame.getContentPane().add(label_4);
 
-		button_1 = new JButton("Criar novo cliente");
-		button_1.addActionListener(new ActionListener() {
+		btnCriarNovoCtipo = new JButton("Criar novo tipo de veículo");
+		btnCriarNovoCtipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(textField_1.getText().isEmpty()) {
@@ -143,9 +137,9 @@ public class TelaTipos {
 				}
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(162, 269, 153, 23);
-		frame.getContentPane().add(button_1);
+		btnCriarNovoCtipo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCriarNovoCtipo.setBounds(86, 269, 200, 23);
+		frame.getContentPane().add(btnCriarNovoCtipo);
 
 		button = new JButton("Listar");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -154,7 +148,7 @@ public class TelaTipos {
 				listagem();
 			}
 		});
-		button.setBounds(308, 11, 89, 23);
+		button.setBounds(319, 269, 89, 23);
 		frame.getContentPane().add(button);
 
 		label_3 = new JLabel("nome:");
@@ -177,7 +171,7 @@ public class TelaTipos {
 						label.setText("nao implementado " );
 						String nome = (String) table.getValueAt( table.getSelectedRow(), 0);
 						Fachada.excluirTipo(nome);
-						label.setText("cliente apagado" );
+						label.setText("tipo de veículo apagado" );
 						listagem();
 					}
 					else
@@ -189,7 +183,7 @@ public class TelaTipos {
 			}
 		});
 		button_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_2.setBounds(415, 269, 153, 23);
+		button_2.setBounds(440, 269, 200, 23);
 		frame.getContentPane().add(button_2);
 	}
 

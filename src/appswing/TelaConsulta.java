@@ -1,9 +1,3 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * POB - Persistencia de Objetos
- * Prof. Fausto Ayres
- *
- */
 package appswing;
 
 import java.awt.Color;
@@ -32,8 +26,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.db4o.ObjectContainer;
 
-import modelo.Aluguel;
-import modelo.Carro;
 import modelo.Registro;
 import modelo.Veiculo;
 import regras_negocio.Fachada;
@@ -82,11 +74,12 @@ public class TelaConsulta {
 	 */
 	private void initialize() {
 		frame = new JDialog();
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setModal(true);
 
 		frame.setResizable(false);
 		frame.setTitle("Consulta");
-		frame.setBounds(100, 100, 729, 385);
+		frame.setBounds(100, 100, 729, 359);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.addWindowListener(new WindowAdapter() {
@@ -126,7 +119,7 @@ public class TelaConsulta {
 
 		label = new JLabel("");		//label de mensagem
 		label.setForeground(Color.BLUE);
-		label.setBounds(21, 321, 688, 14);
+		label.setBounds(21, 289, 688, 14);
 		frame.getContentPane().add(label);
 
 		label_4 = new JLabel("resultados:");

@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,10 +23,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.db4o.ObjectContainer;
-
-import modelo.Aluguel;
-import modelo.Carro;
 import modelo.Veiculo;
 import regras_negocio.Fachada;
 
@@ -38,7 +33,7 @@ public class TelaVeiculos {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JButton button;
-	private JButton button_1;
+	private JButton btnCriarVeculo;
 	private JButton button_2;
 	private JLabel label;
 	private JLabel label_2;
@@ -77,7 +72,7 @@ public class TelaVeiculos {
 		frame.setModal(true);
 
 		frame.setResizable(false);
-		frame.setTitle("Carro");
+		frame.setTitle("Veículo");
 		frame.setBounds(100, 100, 729, 385);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -138,8 +133,8 @@ public class TelaVeiculos {
 		textField.setBounds(57, 238, 195, 20);
 		frame.getContentPane().add(textField);
 
-		button_1 = new JButton("Criar veiculo");
-		button_1.addActionListener(new ActionListener() {
+		btnCriarVeculo = new JButton("Criar veículo");
+		btnCriarVeculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(textField.getText().isEmpty() || textField_1.getText().isEmpty()) {
@@ -157,9 +152,9 @@ public class TelaVeiculos {
 				}
 			}
 		});
-		button_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		button_1.setBounds(324, 237, 153, 23);
-		frame.getContentPane().add(button_1);
+		btnCriarVeculo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCriarVeculo.setBounds(324, 237, 153, 23);
+		frame.getContentPane().add(btnCriarVeculo);
 
 		button = new JButton("Listar");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));

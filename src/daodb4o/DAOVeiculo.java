@@ -51,7 +51,7 @@ public class DAOVeiculo extends DAO<Veiculo> {
 		}
 		public void evaluate(Candidate candidate) {
 			Veiculo veiculo = (Veiculo) candidate.getObject();
-			if(veiculo.getRegistros().size() > 1) 
+			if(veiculo.getRegistros().size() > n) 
 				candidate.include(true); 
 			else
 				candidate.include(false);
