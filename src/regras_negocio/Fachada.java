@@ -63,6 +63,9 @@ public class Fachada {
 		
 		List<Registro> registros = veiculo.getRegistros();
 		
+		if (operacao == null)
+            throw new Exception("campo vazio");
+		
 		/*if (operacao.equals("entrada")) {
 			if (registros.get(registros.size()-1).getOperacao().equals("entrada")) 
 				throw new Exception("Entrada já registrada");
@@ -73,6 +76,8 @@ public class Fachada {
 		}*/
 
 		Registro registro = new Registro(datahora, veiculo, operacao);
+		veiculo.getRegistros().add(registro);
+		daoveiculo.update(veiculo);
 		daoregistro.create(registro);
 		DAO.commit();
 		return registro;
@@ -194,14 +199,14 @@ public class Fachada {
 	
 	public static List<Veiculo> veiculosEmDatas(String data){
 		DAO.begin();
-		List<Veiculo> resultado= daoveiculo.veiculosData(data);
+		List<Veiculo> resultado= daoregistro.registrosDataVeiculo(data);
 		DAO.commit();
 		return resultado;
 	}
 	
 	public static List<Veiculo> veiculosNRegistros(int n){
 		DAO.begin();
-		List<Veiculo> resultado= daoveiculo.veiculosNRegistros(n);
+		List<Veiculo> resultado= daoregistro.veiculosN(n);
 		DAO.commit();
 		return resultado;
 	}

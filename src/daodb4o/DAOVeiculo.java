@@ -29,8 +29,7 @@ public class DAOVeiculo extends DAO<Veiculo> {
 		Query q;
 		q = manager.query();
 		q.constrain(Veiculo.class);
-		q.descend("registros").descend("datahora").constrain(data).contains();
-		q.descend("placa").orderAscending();
+		q.descend("registros").descend("datahora").constrain(data);
 		return q.execute();
 	}
 	
@@ -39,7 +38,11 @@ public class DAOVeiculo extends DAO<Veiculo> {
 		Query q = manager.query();
 		q.constrain(Veiculo.class);
 		q.constrain(new Filtro(n));
-		return q.execute();
+		List<Veiculo> veiculos = q.execute();
+		for (Veiculo veiculo : veiculos) {
+			System.out.println(veiculo);
+		}
+		return veiculos;
 	}
 	
 	// classe interna

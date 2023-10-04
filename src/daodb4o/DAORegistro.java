@@ -1,8 +1,12 @@
 package daodb4o;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import com.db4o.query.Query;
+
 import modelo.Registro;
+import modelo.Veiculo;
 
 public class DAORegistro  extends DAO<Registro>{
 
@@ -38,6 +42,37 @@ public class DAORegistro  extends DAO<Registro>{
 		q.descend("datahora").constrain(data).contains();
 		q.descend("id").orderAscending();
 		return q.execute();
+	}
+	
+	public List<Veiculo> registrosDataVeiculo(String data){
+		Query q = manager.query();
+		q = manager.query();
+		q.constrain(Registro.class);
+		q.descend("datahora").constrain(data).contains();
+		q.descend("id").orderAscending();
+		List<Registro> resultado = q.execute();
+		List<Veiculo> veiculos = new ArrayList<Veiculo>();
+		for (Registro registro : resultado) {
+			veiculos.add(registro.getVeiculo());
+		}
+		return veiculos;
+	}
+	
+	public List<Veiculo> veiculosN(int n){
+		Query q = manager.query();
+		q.constrain(Registro.class);
+		List<Registro> resultado = q.execute();
+		List<Veiculo> veiculos = new ArrayList<Veiculo>();
+		List<Veiculo> veiculosAux = new ArrayList<Veiculo>();
+		for (Registro registro : resultado) {
+			veiculos.add(registro.getVeiculo());
+		}
+		for (Veiculo veiculo : veiculos) {
+			if (veiculo.getRegistros().size() > n) {
+				veiculosAux.add(veiculo);
+			}
+		}
+		return veiculosAux;
 	}
 	
 }

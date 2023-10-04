@@ -130,6 +130,9 @@ public class TelaConsulta {
 		button = new JButton("Consultar");
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		button.addActionListener(new ActionListener() {
+			/**
+			 *
+			 */
 			public void actionPerformed(ActionEvent e) {
 				int index = comboBox.getSelectedIndex();
 				if(index<0)
@@ -147,9 +150,8 @@ public class TelaConsulta {
 						listagemVeiculo(resultado2);
 						break;
 					case 2: 
-						String n = JOptionPane.showInputDialog("digite um número");
-						int numero = Integer.parseInt(n);
-						List<Veiculo> resultado3 = Fachada.veiculosNRegistros(numero);
+						int n = Integer.parseInt(JOptionPane.showInputDialog("digite um número"));
+						List<Veiculo> resultado3 = Fachada.veiculosNRegistros(n);
 						listagemVeiculo(resultado3);
 						break;
 

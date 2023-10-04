@@ -4,6 +4,7 @@ import com.db4o.ObjectContainer;
 
 import modelo.Registro;
 import modelo.Veiculo;
+import regras_negocio.Fachada;
 import modelo.TipoVeiculo;
 
 public class Cadastrar {
@@ -11,82 +12,33 @@ public class Cadastrar {
 
 	public Cadastrar() {
 		try {
-			manager = Util.conectarBanco();
-
+			
+			Fachada.inicializar();
+			
 			System.out.println("cadastrando...");
 			
-			TipoVeiculo carro = new TipoVeiculo("carro");
-			manager.store(carro);
-			manager.commit();
+			Fachada.criarTipo("moto");
+			Fachada.criarTipo("carro");
 			
-			TipoVeiculo moto = new TipoVeiculo("moto");
-			manager.store(moto);
-			manager.commit();
+			Fachada.criarVeiculo("AAA1000", "moto");
+			Fachada.criarVeiculo("AAB1001", "carro");
+			Fachada.criarVeiculo("BCD1012", "carro");
+			Fachada.criarVeiculo("KFC2002", "carro");
 			
-			Veiculo veiculo1 = new Veiculo("AAA1000", moto);
-			manager.store(veiculo1);
-			manager.commit();
+			Fachada.criarRegistro("11/02/2023 11:55", "AAA1000", "entrada");
+			Fachada.criarRegistro("11/02/2023 11:58", "BCD1012", "entrada");
+			Fachada.criarRegistro("11/02/2023 12:37", "AAA1000", "saida");
+			Fachada.criarRegistro("12/02/2023 15:20", "AAB1001", "entrada");
+			Fachada.criarRegistro("12/02/2023 18:50", "AAB1001", "saida");
+			Fachada.criarRegistro("13/02/2023 14:00", "KFC2002", "entrada");
 			
-			Veiculo veiculo2 = new Veiculo("AAB1001", carro);
-			manager.store(veiculo2);
-			manager.commit();
+			Fachada.finalizar();
 			
-			Veiculo veiculo3 = new Veiculo("BCD1012", carro);
-			manager.store(veiculo3);
-			manager.commit();
 			
-			Veiculo veiculo4 = new Veiculo("KFC2002", carro);
-			manager.store(veiculo4);
-			manager.commit();
-			
-			Registro registro1 = new Registro("11/02/2023 11:55",  veiculo1 , "entrada");
-			manager.store(registro1);
-			manager.commit();
-			
-			Registro registro2 = new Registro("11/02/2023 11:58",  veiculo3 , "entrada");
-			manager.store(registro2);
-			manager.commit();
-			
-			Registro registro3 = new Registro("11/02/2023 12:37",  veiculo1 , "saida");
-			manager.store(registro3);
-			manager.commit();
-			
-			Registro registro4 = new Registro("12/02/2023 15:20",  veiculo2 , "entrada");
-			manager.store(registro4);
-			manager.commit();
-			
-			Registro registro5 = new Registro("12/02/2023 18:50",  veiculo2 , "saida");
-			manager.store(registro5);
-			manager.commit();
-			
-			Registro registro6 = new Registro("13/02/2023 14:00",  veiculo4 , "entrada");
-			manager.store(registro6);
-			manager.commit();
-			
-			veiculo1.inserirRegistro(registro1);
-			veiculo1.inserirRegistro(registro3);
-			manager.store(veiculo1);
-			manager.commit();
-			
-			veiculo2.inserirRegistro(registro4);
-			veiculo2.inserirRegistro(registro5);
-			manager.store(veiculo2);
-			manager.commit();
-			
-			veiculo3.inserirRegistro(registro2);
-			manager.store(veiculo3);
-			manager.commit();
-			
-			veiculo4.inserirRegistro(registro6);
-			manager.store(veiculo4);
-			manager.commit();
-			
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
-		Util.desconectar();
 		System.out.println("\nfim do programa !");
 	}
 
