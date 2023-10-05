@@ -1,49 +1,30 @@
 package appconsole;
 
-import java.util.List;
-
-import com.db4o.ObjectContainer;
-import com.db4o.query.Query;
-
-import modelo.Veiculo;
-import modelo.Registro;
+import regras_negocio.Fachada;
 
 public class Alterar {
-	protected ObjectContainer manager;
 
 	public Alterar(){
-		manager = Util.conectarBanco();
+		Fachada.inicializar();
 		atualizar();
-		Util.desconectar();
-
-		System.out.println("\n\n aviso: feche sempre o plugin OME antes de executar aplicação");
+		Fachada.finalizar();
 	}
  
 	public void atualizar(){
-		//localizar veiculo com placa AAB1001
-		Query q = manager.query();
-		q.constrain(Veiculo.class);  				
-		q.descend("placa").constrain("AAB1001");		 
-		List<Veiculo> resultados = q.execute(); // select v from Veiculo v where p.placa="AAB1001"
-		
-		if(resultados.size()>0) {
-			Veiculo v =  resultados.get(0);
-			v.setPlaca("ABC1234");
-			
-			//adicionar novo registro
-			v.inserirRegistro(new Registro("13/02/2023 11:27",  v , "entrada"));
-
-			manager.store(v);
-			manager.commit();
-			System.out.println("alterou placa e registros do veiculo");
+		try {
+					
+			System.out.println("alterando veiculo");
+			Fachada.alterarVeiculo("AAB1001", "ABC1234");
+			Fachada.criarRegistro("13/02/2023 11:27", "ABC1234", "entrada");
+			System.out.println("\n... veiculo alterado!");
+					
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		else
-			System.out.println("veiculo AAB1001 inexistente");
+				
+		System.out.println("\nfim do programa !");
 	}
 
-
-
-	//=================================================
 	public static void main(String[] args) {
 		new Alterar();
 	}

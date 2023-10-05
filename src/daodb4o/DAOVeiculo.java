@@ -29,20 +29,16 @@ public class DAOVeiculo extends DAO<Veiculo> {
 		Query q;
 		q = manager.query();
 		q.constrain(Veiculo.class);
-		q.descend("registros").descend("datahora").constrain(data);
+		q.descend("registros").descend("datahora").constrain(data).contains();
 		return q.execute();
 	}
 	
 	// quais os veiculos contendo com mais de N registros
-	public List<Veiculo> veiculosNRegistros(int n){
+	public List<Veiculo> veiculosN(int n){
 		Query q = manager.query();
 		q.constrain(Veiculo.class);
 		q.constrain(new Filtro(n));
-		List<Veiculo> veiculos = q.execute();
-		for (Veiculo veiculo : veiculos) {
-			System.out.println(veiculo);
-		}
-		return veiculos;
+		return q.execute();
 	}
 	
 	// classe interna

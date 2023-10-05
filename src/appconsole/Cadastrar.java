@@ -1,14 +1,8 @@
 package appconsole;
 
-import com.db4o.ObjectContainer;
-
-import modelo.Registro;
-import modelo.Veiculo;
 import regras_negocio.Fachada;
-import modelo.TipoVeiculo;
 
 public class Cadastrar {
-	protected ObjectContainer manager;
 
 	public Cadastrar() {
 		try {

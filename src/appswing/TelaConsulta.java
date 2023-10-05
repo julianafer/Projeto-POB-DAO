@@ -141,12 +141,12 @@ public class TelaConsulta {
 					switch(index) {
 					case 0: 
 						String data = JOptionPane.showInputDialog("digite a data (dd/mm/aaaa)");
-						List<Registro> resultado = Fachada.registrosData(data);
+						List<Registro> resultado = Fachada.registrosEmData(data);
 						listagemRegistro(resultado);
 						break;
 					case 1: 
 						String data2 = JOptionPane.showInputDialog("digite a data (dd/mm/aaaa)");
-						List<Veiculo> resultado2 = Fachada.veiculosEmDatas(data2);
+						List<Veiculo> resultado2 = Fachada.veiculosEmData(data2);
 						listagemVeiculo(resultado2);
 						break;
 					case 2: 
